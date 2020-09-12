@@ -10,7 +10,6 @@
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
     "amazon-cognito-identity-js": "^4.3.4",
-   
     "better-docs": "^2.3.2",
     "fontsource-roboto": "^3.0.3",
     "jsdoc": "^3.6.5",
