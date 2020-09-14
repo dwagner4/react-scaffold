@@ -4,7 +4,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer"
 import ParmAppBar from "./ParmAppBar";
 import Sidebar from "./Sidebar";
-import AuthProfileDialog from '../../authenticator/auth-forms/AuthProfileDialog';
 import { GlobalContext } from '../../../contexts/GlobalContext';
 
 const drawerWidth = 240;
@@ -84,7 +83,6 @@ export default function Layout({children}) {
             anchor={'top'}
             open={acctOpen}
             onClose={() => setAcctOpen(false)}>
-            <AuthProfileDialog />
           </Drawer>
     </div>
   );

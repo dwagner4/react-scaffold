@@ -1,4 +1,4 @@
-import { authenticate, signUp, getSession, getUserAttributes } from './useAccounts'
+
 
 export const loginSchema = {
     schema: {
@@ -15,10 +15,6 @@ export const loginSchema = {
             "ui:widget": "password" // could also be "select"
         }
     },
-    onSubmit: ({formData}, e) => {
-        console.log("Data submitted: ",  formData);
-        authenticate(formData.email, formData.password)
-    }
 };
 
 export const forgotSchema = {
@@ -36,7 +32,6 @@ export const forgotSchema = {
             "ui:widget": "password" // could also be "select"
         }
     },
-    onSubmit: ({formData}, e) => console.log("Data submitted: ",  formData)
 };
 
 export const newAccountSchema = {
@@ -62,18 +57,6 @@ export const newAccountSchema = {
             "ui:widget": "password" // could also be "select"
         }
     },
-    onSubmit: ({formData}, e) => 
-        {
-            console.log("Data submitted: ",  formData);
-            const { email, firstName, lastName, position, dhsComponent, password } = formData;
-
-            let attributes = [];
-            attributes.push({Name: 'email', Value: email});
-            attributes.push({Name: 'family_name', Value: lastName});
-            attributes.push({Name: 'given_name', Value: firstName});
-            attributes.push({Name: 'custom:position', Value: position});
-            signUp(email, password, attributes);
-        }
 }
 
 
