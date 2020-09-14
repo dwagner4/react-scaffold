@@ -18,7 +18,7 @@ const App = () => {
   return (
     <GlobalContext.Provider value={{ state, dispatch }}>
       <ThemeProvider theme={theme}>
-        { state.isLoggedIn && state.hasAccess ? (
+        { state.userinfo  ? (
           <BrowserRouter>
             <Layout>
               <Switch>

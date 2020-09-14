@@ -3,12 +3,7 @@ import React from 'react';
 export const GlobalContext = React.createContext();
 
 export const initialGlobalState = {
-  isLoggedIn: false,
-  hasAccess: false,
-  isCreateAccount: false,
-  isForgotPassword: false,
-  isResetPassword: false,
-  isEditProfile: false,
+  userinfo: null,
   ui: {showSidebar: true}
 };
 

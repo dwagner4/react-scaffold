@@ -25,7 +25,7 @@ const Pool = new CognitoUserPool(poolData);
  * @param {object[]} attributes - all user attributes expressed as {"Name": value, "Value": value} custom variable should be "custom:name"
  * @return {Promise<object>} either err or results 
  */
-export const signUp = (username, email, password, attributes) => {
+export const signUp = (username, password, attributes) => {
     Pool.signUp( username, password, attributes, null, (err, data) => {
         if (err) console.log(err)
         console.log(data)

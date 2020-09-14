@@ -1,8 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { authenticate, getSession, getUserAttributes } from '../useAccounts'
-import Form from "@rjsf/core";
+import { authenticate, getSession, getUserAttributes } from '../authenticator/useAccounts'
 
-import { GlobalContext } from '../../../contexts/GlobalContext';
+import { GlobalContext } from '../../contexts/GlobalContext';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
@@ -69,28 +68,12 @@ const AuthDialog = (props) => {
     }
   };
 
-  const schema = {
-    title: "Todo",
-    type: "object",
-    required: ["title"],
-    properties: {
-      title: {type: "string", title: "Title", default: "A new task"},
-      done: {type: "boolean", title: "Done?", default: false}
-    }
-  };
-
-  const log = (type) => console.log.bind(console, type);
-
   return (
     <Card className={classes.root}>
       <CardContent>
         <Typography variant="h5" gutterBottom>
           {message}
         </Typography>
-        <Form schema={schema}
-        onChange={log("changed")}
-        onSubmit={log("submitted")}
-        onError={log("errors")} />
         <div>
           <TextField
             required

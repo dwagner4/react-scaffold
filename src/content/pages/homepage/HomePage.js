@@ -5,7 +5,8 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import logo from '../../../assets/Group1@2x@2x.png';
 import logosm from '../../../assets/DHS_logo.svg';
-import Authenticator from '../../authenticator/Authenticator';
+// import Authenticator from '../../authenticator/Authenticator';
+import UserAuth from '../../authenticator/UserAuth';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -49,7 +50,7 @@ const HomePage = () => {
         className={classes.logincard}
         justify="center"
         alignItems="center">
-        <Authenticator />
+        <UserAuth />
       </Grid>
       <Grid
         container
