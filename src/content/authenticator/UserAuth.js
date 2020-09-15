@@ -58,6 +58,7 @@ const UserAuth = () => {
 
 
     const loginSubmit = ({formData}, e) => {
+        setOpen(false)
         const Username = formData.email;
         const Password = formData.password;
         setErrorMsg(null);
@@ -95,6 +96,7 @@ const UserAuth = () => {
     const forgotSubmit =  ({formData}, e) => console.log("Forgot data submitted: ",  formData)
     
     const newAccountSubmit = ({formData}, e) => {
+        setOpen(false)
         console.log("Data submitted: ",  formData);
         const { email, firstName, lastName, position, dhsComponent, password } = formData;
 
@@ -102,17 +104,23 @@ const UserAuth = () => {
         attributes.push({Name: 'email', Value: email});
         
         Pool.signUp( email, password, attributes, null, (err, data) => {
-            if (err) {console.log(err)}
+            if (err) {
+                console.log(err);
+                setErrorMsg(err.message)
+                setOpen(true)
+            }
             else {
-            console.log(data)
-            const newUser = (data.user);
-            console.log('user name is ' + newUser.getUsername());
-            setConfirmName(newUser.getUsername())
-            setOpenConfirm(true)}
+                console.log(data)
+                const newUser = (data.user);
+                console.log('user name is ' + newUser.getUsername());
+                setConfirmName(newUser.getUsername());
+                setOpenConfirm(true);
+            }
         })
     }
 
     const confirmUser = () => {
+        setOpen(false)
         console.log(code)
         console.log(confirmName)
         const Username = confirmName;
@@ -120,9 +128,13 @@ const UserAuth = () => {
         newUser.confirmRegistration(code, true, function(err, result) {
             if (err) {
                 alert(err);
-                return;
+                setErrorMsg(err.message)
+                setOpen(true)
+            } else {
+                console.log('call result: ' + result);
+                setOpenConfirm(false)
+                setCreateAccount(false);
             }
-            console.log('call result: ' + result);
         });
     }
 
@@ -164,7 +176,7 @@ const UserAuth = () => {
                     color="primary"
                     className={classes.login}
                     size="small"
-                    onClick={() => {setCreateAccount(false);setForgotPassword(false);}}>
+                    onClick={() => {setCreateAccount(false);setForgotPassword(false);setOpen(false)}}>
                     Log In
                 </Button>
             ) : (
@@ -173,14 +185,14 @@ const UserAuth = () => {
                         color="primary"
                         className={classes.login}
                         size="small"
-                        onClick={() => setCreateAccount(!createAccount)}>
+                        onClick={() => {setCreateAccount(!createAccount);setOpen(false)}}>
                     new account
                 </Button>
                 <Button
                         color="primary"
                         className={classes.login}
                         size="small"
-                        onClick={() => setForgotPassword(!forgotPassword)}>
+                        onClick={() => {setForgotPassword(!forgotPassword);setOpen(false)}}>
                     forgot Password
                 </Button>
                 </div>
