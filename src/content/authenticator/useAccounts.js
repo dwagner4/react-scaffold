@@ -7,13 +7,13 @@ import {
     AuthenticationDetails,
 } from 'amazon-cognito-identity-js';
 
-
+import { Pool } from '../../aws-config'
     
-const poolData = {
-    UserPoolId: 'us-east-1_IQvSBb8la', // Your user pool id here
-    ClientId: '6r52qalanmti6ejbkuek71n4q1', // Your client id here
-};
-const Pool = new CognitoUserPool(poolData);
+// const poolData = {
+//     UserPoolId: 'us-east-1_IQvSBb8la', // Your user pool id here
+//     ClientId: '6r52qalanmti6ejbkuek71n4q1', // Your client id here
+// };
+// const Pool = new CognitoUserPool(poolData);
 
 /**
  * @function signUp - requests the creation of a new user account in a userPool 

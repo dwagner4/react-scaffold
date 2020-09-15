@@ -13,12 +13,14 @@ import {
     CognitoUser,
     AuthenticationDetails,
 } from 'amazon-cognito-identity-js';
+
+import { Pool } from '../../aws-config'
   
-const poolData = {
-    UserPoolId: 'us-east-1_IQvSBb8la', // Your user pool id here
-    ClientId: '6r52qalanmti6ejbkuek71n4q1', // Your client id here
-};
-const Pool = new CognitoUserPool(poolData);
+// const poolData = {
+//     UserPoolId: 'us-east-1_IQvSBb8la', // Your user pool id here
+//     ClientId: '6r52qalanmti6ejbkuek71n4q1', // Your client id here
+// };
+// const Pool = new CognitoUserPool(poolData);
 
 const useStyles = makeStyles((theme) => ({
     card: {
@@ -72,9 +74,9 @@ const UserAuth = () => {
 
         let attributes = [];
         attributes.push({Name: 'email', Value: email});
-        attributes.push({Name: 'family_name', Value: lastName});
-        attributes.push({Name: 'given_name', Value: firstName});
-        attributes.push({Name: 'custom:position', Value: position});
+        // attributes.push({Name: 'family_name', Value: lastName});
+        // attributes.push({Name: 'given_name', Value: firstName});
+        // attributes.push({Name: 'custom:position', Value: position});
         Pool.signUp( email, password, attributes, null, (err, data) => {
             if (err) console.log(err)
             console.log(data)
