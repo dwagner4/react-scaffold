@@ -10,6 +10,12 @@ import Alert from '@material-ui/lab/Alert';
 import IconButton from '@material-ui/core/IconButton';
 import Collapse from '@material-ui/core/Collapse';
 import CloseIcon from '@material-ui/icons/Close';
+import TextField from '@material-ui/core/TextField';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
 
 import {
     CognitoUserPool,
@@ -45,8 +51,11 @@ const UserAuth = () => {
     const [ forgotPassword, setForgotPassword ] = useState( false );
     const [ errorMsg, setErrorMsg ] = useState();
     const [ open, setOpen ] = useState( false );
+    const [ openConfirm, setOpenConfirm ] = useState(false);
+    const [ code, setCode ] = useState();
+    const [ confirmName, setConfirmName ] = useState();
 
-    
+
 
     const loginSubmit = ({formData}, e) => {
         const Username = formData.email;
@@ -91,13 +100,30 @@ const UserAuth = () => {
 
         let attributes = [];
         attributes.push({Name: 'email', Value: email});
-        // attributes.push({Name: 'family_name', Value: lastName});
-        // attributes.push({Name: 'given_name', Value: firstName});
-        // attributes.push({Name: 'custom:position', Value: position});
+        
         Pool.signUp( email, password, attributes, null, (err, data) => {
-            if (err) console.log(err)
+            if (err) {console.log(err)}
+            else {
             console.log(data)
+            const newUser = (data.user);
+            console.log('user name is ' + newUser.getUsername());
+            setConfirmName(newUser.getUsername())
+            setOpenConfirm(true)}
         })
+    }
+
+    const confirmUser = () => {
+        console.log(code)
+        console.log(confirmName)
+        const Username = confirmName;
+        const newUser = new CognitoUser({Username, Pool});
+        newUser.confirmRegistration(code, true, function(err, result) {
+            if (err) {
+                alert(err);
+                return;
+            }
+            console.log('call result: ' + result);
+        });
     }
 
     let formconfig = loginSchema;
@@ -160,6 +186,27 @@ const UserAuth = () => {
                 </div>
             ) 
         }
+            <Dialog open={openConfirm} onClose={() => setOpenConfirm(false)} aria-labelledby="form-dialog-title">
+                <DialogTitle id="form-dialog-title">Enter Confirmation Code</DialogTitle>
+                <DialogContent>
+                    <DialogContentText>
+                        A code has been sent to your email account.
+                    </DialogContentText>
+                    <TextField
+                        autoFocus
+                        margin="dense"
+                        id="code"
+                        label="code"
+                        fullWidth
+                        onChange={(e) => setCode(e.target.value)}
+                    />
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={confirmUser} color="primary">
+                        Submit
+                    </Button>
+                </DialogActions>
+            </Dialog>
         </div>
     )
 }
