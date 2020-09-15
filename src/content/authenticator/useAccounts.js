@@ -67,16 +67,17 @@ export const getSession = () => {
                 if (err) {
                     console.log("WTF 2")
                 } else {
-                    let attrObj = {}
-                    user.getUserAttributes((err, attributes) =>{
-                        for ( let attribute of attributes) {
-                            const { Name, Value } = attribute;
-                            attrObj[Name] = Value;
-                        }
-                        console.log(attrObj)
-                    });
-                    results = {...session, ...attrObj};
-                    console.log(results)
+                    // let attrObj = {}
+                    // user.getUserAttributes((err, attributes) =>{
+                    //     for ( let attribute of attributes) {
+                    //         const { Name, Value } = attribute;
+                    //         attrObj[Name] = Value;
+                    //     }
+                    //     console.log(attrObj)
+                    // });
+                    // results = {...session, ...attrObj};
+                    // console.log(results)
+                    console.log(session);
                 }
             });
         } else {

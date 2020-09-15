@@ -9,6 +9,12 @@ export const initialGlobalState = {
 
 export function globalReducer(state, action) {
   switch (action.type) {
+    case 'SET_USERINFO':
+      return {
+        ...state,
+        userinfo: action.payload,
+      };
+    ///////////////////////////////////
     case 'SET_IS_LOGGED_IN':
       return {
         ...state,

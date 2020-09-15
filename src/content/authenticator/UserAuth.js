@@ -6,6 +6,10 @@ import { loginSchema, newAccountSchema, forgotSchema } from './schemas'
 
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
+import Alert from '@material-ui/lab/Alert';
+import IconButton from '@material-ui/core/IconButton';
+import Collapse from '@material-ui/core/Collapse';
+import CloseIcon from '@material-ui/icons/Close';
 
 import {
     CognitoUserPool,
@@ -39,31 +43,44 @@ const UserAuth = () => {
     const classes = useStyles();
     const [ createAccount, setCreateAccount ] = useState( false );
     const [ forgotPassword, setForgotPassword ] = useState( false );
+    const [ errorMsg, setErrorMsg ] = useState();
+    const [ open, setOpen ] = useState( false );
 
     
 
-    const loginSubmit = async ({formData}, e) => {
+    const loginSubmit = ({formData}, e) => {
         const Username = formData.email;
         const Password = formData.password;
-        await new Promise((resolve, reject) => {
-            const user = new CognitoUser({Username, Pool});
-            const authDetails = new AuthenticationDetails({Username, Password});
-    
-            user.authenticateUser(authDetails, {
-                onSuccess: result => {
-                    console.log('onSuccess:', result);
-                    resolve(result);
-                },
-                onFailure: err => {
-                    console.log('onFailure:', err.code);
-                    reject(err.message);
-                },
-                onPasswordRequired: result => {
-                    console.log('onPasswordRequired:', result);
-                    resolve(result);
-                },
-            })
+        setErrorMsg(null);
+        
+        const user = new CognitoUser({Username, Pool});
+        const authDetails = new AuthenticationDetails({Username, Password});
+
+        user.authenticateUser(authDetails, {
+            onSuccess: result => {
+                console.log('onSuccess:', result);
+                dispatch({
+                    type: 'SET_USERINFO',
+                    payload: {
+                      name: "Dean"
+                    },
+                  });
+            },
+            onFailure: err => {
+                console.log('onFailure:', err.code);
+                console.log(err)
+                setErrorMsg(err.message)
+                setOpen(true)
+            },
+            onPasswordRequired: result => {
+                console.log('onPasswordRequired:', result);
+            },
+            mfaRequired: function(codeDeliveryDetails) {
+                // var verificationCode = prompt('Please input verification code' ,'');
+                // user.sendMFACode(verificationCode, this);
+            }
         })
+        
     }
     
     const forgotSubmit =  ({formData}, e) => console.log("Forgot data submitted: ",  formData)
@@ -90,6 +107,23 @@ const UserAuth = () => {
 
     return (
         <div className={classes.card}>
+            <Collapse in={open}>
+                <Alert variant="filled" severity="error"
+                action={
+                    <IconButton
+                            aria-label="close"
+                            color="inherit"
+                            size="small"
+                            onClick={() => {
+                                setOpen(false);
+                            }}>
+                        <CloseIcon fontSize="inherit" />
+                    </IconButton>
+                }
+                >
+                {errorMsg}
+                </Alert>
+            </Collapse>
         { !state.userinfo ? 
             (<Form 
                 schema={formconfig.schema}
