@@ -19,6 +19,7 @@ import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import { useHistory, NavLink } from 'react-router-dom';
 import { GlobalContext } from '../../../contexts/GlobalContext';
 import WorkIcon from '@material-ui/icons/Work';
+import logosm from '../../../assets/DHS_logo.svg';
 
 const drawerWidth = 240;
 
@@ -92,6 +93,11 @@ const useStyles = makeStyles((theme) => ({
   linkText: {
     fontWeight: 'inherit',
   },
+  logosm: {
+    width: 48,
+    height: 48,
+    marginTop: 5
+  },
 }));
 
 export default function Sidebar({ open, close, handleAccountOpen }) {
@@ -122,13 +128,7 @@ export default function Sidebar({ open, close, handleAccountOpen }) {
           <IconButton edge="start" onClick={close}>
             <ChevronLeftIcon />
           </IconButton>
-          <IconButton
-            edge="start"
-            color="primary"
-            aria-label="account"
-            onClick={handleAccountOpen}>
-            <AccountCircleIcon fontSize="large" />
-          </IconButton>
+          <img src={logosm} alt="DHS Logo" className={classes.logosm} />
         </div>
         <div>
           <Typography variant="h6">Power User</Typography>

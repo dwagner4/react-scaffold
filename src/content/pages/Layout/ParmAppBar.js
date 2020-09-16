@@ -9,6 +9,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import logo from '../../../assets/Group1@2x@2x.png';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import { GlobalContext } from '../../../contexts/GlobalContext';
+import logosm from '../../../assets/DHS_logo.svg';
 
 const drawerWidth = 240;
 
@@ -31,9 +32,6 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    minHeight: 128,
-    paddingTop: theme.spacing(1),
-    paddingBottom: theme.spacing(2),
   },
   toolbarLeft: {
     display: 'flex',
@@ -52,7 +50,12 @@ const useStyles = makeStyles((theme) => ({
   },
   logo: {
     maxHeight: 128
-  }
+  },
+  logosm: {
+    width: 48,
+    height: 48,
+    marginTop: 5
+  },
 }));
 
 export default function ParmAppBar({ open, openDrawer, handleAccountOpen }) {
@@ -78,18 +81,11 @@ export default function ParmAppBar({ open, openDrawer, handleAccountOpen }) {
             <MenuIcon />
           </IconButton>
           {!open && (
-            <IconButton
-              edge=""
-              color="primary"
-              aria-label="account"
-              onClick={handleAccountOpen}>
-              <AccountCircleIcon fontSize="large" />
-            </IconButton>
+            <img src={logosm} alt="DHS Logo" className={classes.logosm} />
           )}
         </div>
         <Typography variant="h5">{state.ui.pageTitle}</Typography>
         </div>
-        <img src={logo} alt="DHS Logo" className={classes.logo}/>
       </Toolbar>
     </AppBar>
   );
