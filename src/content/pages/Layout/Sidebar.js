@@ -107,12 +107,12 @@ export default function Sidebar({ open, close, handleAccountOpen }) {
   const [portfolio, setPortfolio] = React.useState(false);
   const [sys, setSys] = React.useState(false);
 
-  // React.useEffect(() => {
-  //   console.log(state.userinfo.isSysAdmin, state.userinfo.access);
-  //   setPortfolio(state.userinfo && state.userinfo.access === 'all');
+  React.useEffect(() => {
+    console.log(state.userinfo.isSysAdmin, state.userinfo.access);
+    setPortfolio(state.userinfo && state.userinfo.access === 'all');
 
-  //   setSys(state.userinfo && state.userinfo.isSysAdmin);
-  // }, [state.userinfo]);
+    setSys(state.userinfo && state.userinfo.isSysAdmin);
+  }, [state.userinfo]);
 
   return (
     <Drawer
@@ -131,7 +131,7 @@ export default function Sidebar({ open, close, handleAccountOpen }) {
           <img src={logosm} alt="DHS Logo" className={classes.logosm} />
         </div>
         <div>
-          <Typography variant="h6">Power User</Typography>
+          <Typography variant="h6">{state.userinfo.firstName} {state.userinfo.lastName}</Typography>
         </div>
       </div>
       <Divider />
@@ -212,20 +212,6 @@ export default function Sidebar({ open, close, handleAccountOpen }) {
             />
           </ListItem>
         ) : null}
-        <ListItem
-          button
-          component={NavLink}
-          exact
-          to="/help"
-          activeClassName={classes.activeLink}>
-          <ListItemIcon>
-            <HelpIcon />
-          </ListItemIcon>
-          <ListItemText
-            primaryTypographyProps={{ className: classes.linkText }}
-            primary="Help"
-          />
-        </ListItem>
       </List>
     </Drawer>
   );

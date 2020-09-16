@@ -25,6 +25,7 @@ import {
 } from 'amazon-cognito-identity-js';
 
 import { Pool } from '../../aws-config'
+import { getUserInfo } from '../../contexts/apiInterface';
   
 // const poolData = {
 //     UserPoolId: 'us-east-1_IQvSBb8la', // Your user pool id here
@@ -69,12 +70,13 @@ const UserAuth = () => {
         user.authenticateUser(authDetails, {
             onSuccess: result => {
                 console.log('onSuccess:', result);
+
+                const userObj = getUserInfo(result.getIdToken().payload.sub)
+                console.log(userObj)
                 dispatch({
                     type: 'SET_USERINFO',
-                    payload: {
-                      name: "Dean"
-                    },
-                  });
+                    payload: userObj,
+                 } );
             },
             onFailure: err => {
                 console.log('onFailure:', err.code);
